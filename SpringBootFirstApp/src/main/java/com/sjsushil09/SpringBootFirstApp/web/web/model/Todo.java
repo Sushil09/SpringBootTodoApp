@@ -8,7 +8,7 @@ public class Todo {
 	private int id;
 	private String user;
 	
-	@Size(min=10, message="Please enter more than 5 characters")
+	@Size(min=10, message="Please enter more than 5 characters")//This validation is done by Hibernate validator.
 	private String description;
 	private Date targetDate;
 	private boolean isDone;
