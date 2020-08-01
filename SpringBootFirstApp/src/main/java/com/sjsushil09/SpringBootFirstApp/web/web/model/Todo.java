@@ -77,24 +77,7 @@ public class Todo {
 		if (getClass() != obj.getClass())
 			return false;
 		Todo other = (Todo) obj;
-		if (description == null) {
-			if (other.description != null)
-				return false;
-		} else if (!description.equals(other.description))
-			return false;
 		if (id != other.id)
-			return false;
-		if (isDone != other.isDone)
-			return false;
-		if (targetDate == null) {
-			if (other.targetDate != null)
-				return false;
-		} else if (!targetDate.equals(other.targetDate))
-			return false;
-		if (user == null) {
-			if (other.user != null)
-				return false;
-		} else if (!user.equals(other.user))
 			return false;
 		return true;
 	}
