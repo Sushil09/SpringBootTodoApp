@@ -39,6 +39,11 @@
     <artifactId>bootstrap</artifactId>
     <version>4.5.0</version>
 </dependency>
+<dependency>
+		<groupId>org.webjars</groupId>
+		<artifactId>bootstrap-datepicker</artifactId>
+		<version>1.0.1</version>
+	</dependency>
 
       <!-- https://mvnrepository.com/artifact/org.webjars.bower/jquery -->
 <dependency>
@@ -78,5 +83,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
