@@ -1,13 +1,7 @@
-<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-	<fmt:formatDate pattern="dd/MM/yyyy" value="${todo.targetDate}" />
+<%@ include file="common/header.jspf" %>
+<%@ include file="common/navigation.jspf" %>
 
-<html>
-<head>
-<title>Add Todo</title>
-<link href="webjars/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
-</head>
-	<body>
+	<fmt:formatDate pattern="dd/MM/yyyy" value="${todo.targetDate}" />
 	<div class="container"> 
 	<form:form method="post" modelAttribute="to-do">
 	<form:hidden path="id"/>
@@ -25,14 +19,5 @@
 			<button type="submit" class="btn btn-success">Add</button>
 	</form:form>
 	</div>	
-	<script src="webjars/jquery/3.5.1/jquery.min.js"></script>
-	<script src="webjars/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-	<script src="webjars/bootstrap-datepicker/1.0.1/js/bootstrap-datepicker.js"></script>
-	<script>
-		$('#targetDate').datepicker({
-			format : 'dd/mm/yyyy'
-		});
-	</script>
-		
-	</body>
-</html>
+<%@ include file="common/footer.jspf" %>	
+	
