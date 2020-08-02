@@ -25,9 +25,16 @@ import com.sjsushil09.SpringBootFirstApp.web.web.services.TodoService;
 @Controller
 @SessionAttributes("name")
 public class TodoController {
+	//To provide SpringBean(Dependancy Injection)
 	@Autowired
 	TodoService todoService;
 	
+	//Refactored method to fetch userName, to improve security
+	private String getLoggedInUser(ModelMap map) {
+		return (String)map.get("name");
+	}
+	
+	//To provide the consistent date across the application
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -37,31 +44,31 @@ public class TodoController {
 	@RequestMapping(value="/list-todos",method=RequestMethod.GET)//to map to particular url routing & only applicable for get method
 	//@ResponseBody//When we don't have view to render
 	public String showTodos(ModelMap map) {
-		String name=(String)map.get("name");
+		String name=getLoggedInUser(map);
 		map.put("todos", todoService.getTodoUser(name));
 		return "list-todos";
 	}
 	
 	@RequestMapping(value="/getTodo",method=RequestMethod.GET)
-	public String GetTodo(ModelMap form) {
-		form.addAttribute("to-do", new Todo(0,(String)form.get("name"),"",new Date(),false));
+	public String GetTodo(ModelMap map) {
+		map.addAttribute("to-do", new Todo(0,getLoggedInUser(map),"",new Date(),false));
 		return "add-Todo"; 
 	}
 	
 	
 	@RequestMapping(value="/getTodo",method=RequestMethod.POST)
-	public String addTodo(ModelMap form, @Valid Todo todo,BindingResult results) {
+	public String addTodo(ModelMap map, @Valid Todo todo,BindingResult results) {
 		if(results.hasErrors())
 			return "redirect:/getTodo";
-		todoService.addTodo((String)form.get("name"),todo.getDescription(), new Date(), false);
+		todoService.addTodo(getLoggedInUser(map),todo.getDescription(), new Date(), false);
 		return "redirect:/list-todos";
 	}
 	
 	@RequestMapping(value="/updateTodo",method=RequestMethod.POST)
-	public String updateTodo(ModelMap form, @Valid Todo todo,BindingResult results) {
+	public String updateTodo(ModelMap map, @Valid Todo todo,BindingResult results) {
 		if(results.hasErrors())
 			return "add-Todo";
-		todo.setUser((String)form.get("name"));
+		todo.setUser(getLoggedInUser(map));
 		todoService.updateTodo(todo);
 		return "redirect:/list-todos";
 	}

@@ -17,20 +17,22 @@ public class LoginController {
 	@Autowired
 	LoginService loginservice;
 	
-	@RequestMapping(value="/login",method=RequestMethod.GET)//to map to particular url routing & only applicable for get method
+	@RequestMapping(value="/",method=RequestMethod.GET)//to map to particular url routing & only applicable for get method
 	//@ResponseBody//When we don't have view to render
 	public String showLoginPage(ModelMap map) {
-		return "login";
-	}
-	
-	@RequestMapping(value="/login",method=RequestMethod.POST)//to map to particular url routing & only applicable for post method
-	//@ResponseBody//When we don't have view to render
-	public String showWelcomPage(ModelMap map, @RequestParam String name, @RequestParam String password) {
-		if(!loginservice.isValid(name, password))
-			return "login";
-		
-		map.put("name",name);
-		map.put("password",password);
+		map.put("name","sushil");
 		return "Welcome";
 	}
+	
+	
+	//Removed below method to replace it with security method
+	/*
+	 * @RequestMapping(value="/login",method=RequestMethod.POST)//to map to
+	 * particular url routing & only applicable for post method
+	 * //@ResponseBody//When we don't have view to render public String
+	 * showWelcomPage(ModelMap map, @RequestParam String name, @RequestParam String
+	 * password) { if(!loginservice.isValid(name, password)) return "login";
+	 * 
+	 * map.put("name",name); map.put("password",password); return "Welcome"; }
+	 */
 }
