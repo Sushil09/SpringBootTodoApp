@@ -3,10 +3,16 @@ package com.sjsushil09.SpringBootFirstApp.web.web.controller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -19,21 +25,25 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.sjsushil09.SpringBootFirstApp.web.web.model.Todo;
-import com.sjsushil09.SpringBootFirstApp.web.web.services.LoginService;
 import com.sjsushil09.SpringBootFirstApp.web.web.services.TodoService;
 
 @Controller
-@SessionAttributes("name")
+//@SessionAttributes("name")
 public class TodoController {
 	//To provide SpringBean(Dependancy Injection)
 	@Autowired
 	TodoService todoService;
 	
-	//Refactored method to fetch userName, to improve security
-	private String getLoggedInUser(ModelMap map) {
-		return (String)map.get("name");
+	private String getLoggedInUser(ModelMap model) {
+		Object principal = SecurityContextHolder.getContext()
+				.getAuthentication().getPrincipal();
+		
+		if (principal instanceof UserDetails) {
+			return ((UserDetails) principal).getUsername();
+		}
+		
+		return principal.toString();
 	}
-	
 	//To provide the consistent date across the application
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) {

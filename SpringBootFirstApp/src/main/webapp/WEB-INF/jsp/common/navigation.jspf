@@ -13,6 +13,11 @@
         <a class="nav-link"href="/list-todos">Todo</a>
       </li>
     </ul>
+    <ul class="nav navbar-right">
+     <li class="nav navbar-right">
+        <a class="nav-link"href="/logout">Logout</a>
+      </li>
+      </ul>
   </div>
 </nav>
 
